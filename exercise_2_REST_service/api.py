@@ -27,7 +27,10 @@ class UserDetails(Resource):
         args = parser.parse_args()
         c.execute("SELECT * FROM user WHERE id=?", (args["user_id"],))
         user = c.fetchone()
-        ret = { "id": user[0], "name": user[1], "username": user[2], "email": user[3] }
+        if user is not None:
+            ret = { "id": user[0], "name": user[1], "username": user[2], "email": user[3] }
+        else:
+            ret = { "error": "no such user" }
         conn.close()
         return ret
 

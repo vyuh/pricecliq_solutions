@@ -25,7 +25,7 @@ class UserDetails(Resource):
         conn = sqlite3.connect(DATABASE_FILE)
         c = conn.cursor()
         args = parser.parse_args()
-        c.execute("SELECT * FROM user WHERE id=?", args["user_id"])
+        c.execute("SELECT * FROM user WHERE id=?", (args["user_id"],))
         user = c.fetchone()
         ret = { "id": user[0], "name": user[1], "username": user[2], "email": user[3] }
         conn.close()
